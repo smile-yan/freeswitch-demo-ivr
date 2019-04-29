@@ -1,6 +1,5 @@
 package cn.smileyan.tts;
 
-import com.alibaba.nls.client.AccessToken;
 import com.alibaba.nls.client.protocol.NlsClient;
 import com.alibaba.nls.client.protocol.OutputFormatEnum;
 import com.alibaba.nls.client.protocol.SampleRateEnum;
@@ -8,7 +7,6 @@ import com.alibaba.nls.client.protocol.tts.SpeechSynthesizer;
 import com.alibaba.nls.client.protocol.tts.SpeechSynthesizerListener;
 import com.alibaba.nls.client.protocol.tts.SpeechSynthesizerResponse;
 import com.aliyuncs.exceptions.ClientException;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -23,14 +21,26 @@ public class SpeechSynthesizerDemo {
     private String appKey;
     private String accessToken;
     private String text;
-    private String username;
+    private String filename;
 
     NlsClient client;
-    public SpeechSynthesizerDemo(String appKey, String token,String username, String text) {
+    public String getText() {
+		return text;
+	}
+	public void setText(String text) {
+		this.text = text;
+	}
+
+
+	public String getFilename() {
+		return filename;
+	}
+	public void setFilename(String filename) {
+		this.filename = filename;
+	}
+	public SpeechSynthesizerDemo(String appKey, String token) {
         this.appKey = appKey;
         this.accessToken = token;
-        this.text = text;
-        this.username = username;
         // Step0 创建NlsClient实例,应用全局创建一个即可,默认服务地址为阿里云线上服务地址
         client = new NlsClient(accessToken);
     }
@@ -74,7 +84,7 @@ public class SpeechSynthesizerDemo {
         SpeechSynthesizer synthesizer = null;
         try {
             // Step1 创建实例,建立连接
-            synthesizer = new SpeechSynthesizer(client, getSynthesizerListener(this.username));
+            synthesizer = new SpeechSynthesizer(client, getSynthesizerListener(this.filename));
             synthesizer.setAppKey(appKey);
             // 设置返回音频的编码格式
             synthesizer.setFormat(OutputFormatEnum.WAV);
@@ -99,30 +109,32 @@ public class SpeechSynthesizerDemo {
         client.shutdown();
     }
     public static void main(String[] args) throws ClientException {
-//    	System.err.println("请输出参数：<filename> <messages> <akID> <akSecret>");
-         
-        if (args.length < 4) {
-        	System.err.println("请输出参数：<filename> <messages> <akID> <akSecret>");
-        	Scanner scanner = new Scanner(System.in);
+    	// 1.默认自带三个参数
+    	Scanner scanner = new Scanner(System.in);
+    	int times=1;
+        if (args.length != 2) {
+        	System.err.println("请输出参数<appKey>、<token>与运行次数");
         	args = new String[4];
         	args[0] = scanner.next();
         	args[1] = scanner.next();
-        	args[2] = scanner.next();
-        	args[3] = scanner.next();
-        	scanner.close();
-//            System.exit(-1);
+        	times = scanner.nextInt();
         }
         
-        if(args[0].length()<1 || args[0].equals("")) {
-        	args[1] = "用户名为空";
+        String appKey = args[0];
+        String token = args[1];
+    	SpeechSynthesizerDemo demo = new SpeechSynthesizerDemo(appKey, token);
+        while(times-->0) {
+        	System.out.print("请输入您要转换生成的文件名（不带扩展名），与要转换的文字（文字间不含空格）：");
+        	String filename = scanner.next();
+        	String text = scanner.next();
+        	demo.setFilename(filename);
+        	demo.setText(text);
+        	demo.process();
+        	System.out.println();
         }
-        AccessToken accessToken = AccessToken.apply(args[2], args[3]);
-        String token = accessToken.getToken();
-        String appKey = "AmFLPKK5R1ZypHvM";
         
-        SpeechSynthesizerDemo demo = new SpeechSynthesizerDemo(appKey, token,args[0],args[1]);
-      
-        demo.process();
         demo.shutdown();
+        scanner.close();
+        System.out.println("感谢使用，已经运行完毕！");
     }
 }
