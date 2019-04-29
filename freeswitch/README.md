@@ -1,6 +1,5 @@
 ## FreeSWITCH 相关配置
 
-### 1. diappl
 
 ### 1. diaplan
 
