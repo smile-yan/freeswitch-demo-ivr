@@ -1,4 +1,4 @@
---- ÓÃÀ´¼ÇÂ¼µ±Ç°½øÈëµÄ×´Ì¬
+--- ç”¨æ¥è®°å½•å½“å‰è¿›å…¥çš„çŠ¶æ€
 grade_now = 1
 sound_now = 0
 function onInput(s,type,obj,arg)
@@ -6,25 +6,22 @@ function onInput(s,type,obj,arg)
         freeswitch.consoleLog("INFO", "DTMF: ".. obj.digit .. "Duration:" .. obj.duration .. "\n")
         if (obj.digit == "0") then
            -- actionVoice(1)
-		-- ·µ»ØÉÏÒ»¼¶
+        -- è¿”å›ä¸Šä¸€çº§
         elseif (obj.digit == "#") then
             grade_now = 1
             session:streamFile("/usr/share/freeswitch/sounds/index.wav")
             session:streamFile("silence_stream://-1,1400") 
-		elseif (obj.digit == "*") then
-           if(sound_now == 0) then
-		       
-		       session:streamFile("/usr/share/freeswitch/sounds/index.wav")
-               session:streamFile("silence_stream://-1,1400") 
-		   else
-              	   
+        elseif (obj.digit == "*") then
+            if(sound_now == 0) then      
+                session:streamFile("/usr/share/freeswitch/sounds/index.wav")
+                session:streamFile("silence_stream://-1,1400") 
+            else  	   
                session:streamFile("/usr/share/freeswitch/sounds/g"..sound_now..".wav")
                session:streamFile("silence_stream://-1,1400") 
-           end
+            end
         else 
-           actionVoice(obj.digit)
+            actionVoice(obj.digit)
         end	
-        
     end
     return ''
 end
