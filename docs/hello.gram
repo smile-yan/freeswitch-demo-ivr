@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<grammar version="1.0" xml:lang="zh-cn" root="Menu" tag-format="semantics/1.0"
+  　　　　xmlns=http://www.w3.org/2001/06/grammar
+　　　　xmlns:sapi="http://schemas.microsoft.com/Speech/2002/06/SRGSExtensions"><!- 这些都是必不可少的-->
+  <rule id="city" scope="public">
+    <one-of>     <!-- 匹配其中一个短语-->
+      <item>北京</item>
+      <item>上海</item>
+    </one-of>
+  </rule>
+  <rule id="cross" scope="public">
+    <one-of>
+      <item>到</item>
+      <item>至</item>
+      <item>飞往</item>
+    </one-of>
+  </rule>
+  <rule id="Menu" scope="public">
+    <item>
+      <ruleref uri="#date"/>         <!--指定关联的其他规则的节点-->
+      <tag>out.date = reles.latest();</tag>
+    </item>
+    <item repeat="0-1">从</item>    <!--显示1次或0次-->
+    <item>
+      <ruleref uri="#city"/>
+      <tag>out.city = rulels.latest();</tag>
+    </item>
+    <item>
+      <ruleref uri="#cross"/>
+      <tag>out.cross = rulels.latest();</tag>
+    </item>
+    <item>
+      <ruleref uri="#city"/>
+      <tag>out.city = rulels.latest();</tag>
+    </item>
+  </rule>
+</grammar>
