@@ -26,12 +26,15 @@ function onInput(s,type,obj,arg)
 					local s2 = string.gsub(s1, " ", "")
    					local s3 = string.gsub(s2, ">", "") 
 					local s4 = string.gsub(s3, "学院", "") 
-
+					-- 查询对应的编号
 					local w = getAcademy(s4)
 					if(w==nil) then
 						session:speak("您所说的是"..result.."但是并不清楚是什么学院")
 					else 
-						session:speak("您所说的是"..result.."编号为："..w)
+						session:speak("您所说的是"..result)
+						session:speak("即将为您播报"..academies[w+1].."简介")
+						session:streamFile("/usr/share/freeswitch/sounds/academy/b"..w..".wav")
+						session:streamFile("silence_stream://-1,1400") 
 						print(w.."\n")
 					end
 				end
@@ -40,8 +43,27 @@ function onInput(s,type,obj,arg)
 				if(sound_now == "4" or sound_now=="5") then
 					session:speak("请您说出您希望了解的专业.......");
 					local result = getARSResult()
-					
-					session:speak("您所说的是"..result)
+					if(result==nil) then
+						session:speak("不能听清您所说的，请再说一遍.......");
+					else
+						-- 去掉空格 句号  >  "学院"
+						local s1 = string.gsub(result, "。", "") 
+						local s2 = string.gsub(s1, " ", "")
+						local s3 = string.gsub(s2, ">", "") 
+						local s4 = string.gsub(s3, "专业", "") 
+						
+						-- 查询对应的编号
+						local w = getProfession(s4)
+						if(w==nil) then
+							session:speak("您所说的是"..result.."但是并不清楚是什么专业")
+						else 
+							session:speak("您所说的是"..result)
+							session:speak("即将为您播报"..professions[w].."简介")
+							session:streamFile("/usr/share/freeswitch/sounds/profession/d"..w..".wav")
+							session:streamFile("silence_stream://-1,1400") 
+						end
+					end
+					--session:speak("您所说的是"..result)
 				end
 			end
 		-- 返回上一级
@@ -53,8 +75,8 @@ function onInput(s,type,obj,arg)
         elseif (obj.digit == "*") then
 			-- index
             if(sound_now == 0) then      
-                session:streamFile("/usr/share/freeswitch/sounds/index.wav")
-                session:streamFile("silence_stream://-1,1400") 
+               session:streamFile("/usr/share/freeswitch/sounds/index.wav")
+               session:streamFile("silence_stream://-1,1400") 
             else  	   
                session:streamFile("/usr/share/freeswitch/sounds/g"..sound_now..".wav")
                session:streamFile("silence_stream://-1,1400") 
@@ -76,7 +98,7 @@ function actionVoice(which)
     end
 end 
 
--- get ARS Result
+-- get ARS Result 
 function getARSResult()
 	local tryagain = 1
 	local xml
@@ -123,7 +145,6 @@ function getAcademy(speech)
 		return 5
 	end
 
-	
 	for i= 1,20 do
 		if(string.find(academies[i],speech.."") == nil) then
 			
@@ -134,6 +155,19 @@ function getAcademy(speech)
 	return nil
 end
 
+professions={"应用经济学","马克思主义理论","中国语言文学","化学","机械工程","计算机科学与技术","土木工程","矿业工程","哲学","法学",
+			 "教育学","体育学","外国语言文学","世界史","数学","物理学","生物学","材料科学与工程","控制科学与工程","建筑学"}
+
+function getProfession(speech)
+	for i= 1,20 do
+		if(string.find(professions[i],speech.."") == nil) then
+			
+		else
+			return i
+		end
+	end
+	return nil	
+end
 
 session:answer()
 session:setInputCallback('onInput','')
