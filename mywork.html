@@ -17,6 +17,12 @@
             //     $("body").append("<p class=\"container text-center\">访客："+data.visitor+"</p>");
             //     $("body").append("<p class=\"container text-center\">等级："+data.grade+"</p>");
             // });
+			$("#btn_edit_type").click(function(){
+				$('#myModal2').modal('show')
+			});
+			$("#btn_add_type").click(function(){
+				$('#myModal1').modal('show')
+			});
         })
     </script>
 </head>
@@ -24,7 +30,8 @@
 <div class="container text-center">
     <div class="jumbotron" style="background: #96b97d">
         <h2>Smileyan 语音合成</h2>
-		<button type="button" class="btn btn-outline-info">添加分类</button>
+		<button type="button" class="btn btn-outline-info" id="btn_add_type">添加分类</button>
+		
     </div>
 </div>
 <div class="container">
@@ -34,7 +41,7 @@
         <div class="col-sm-8">
             <h2>分类名称
 				<div  style="float: right">
-					<button type="button" class="btn btn-outline-info">编辑分类</button>
+					<button type="button" class="btn btn-outline-info" id="btn_edit_type">编辑分类</button>
 			        <button type="button" class="btn btn-outline-info">添加语音</button>
 				</div>
             </h2>
@@ -67,7 +74,61 @@
     <div style="margin-top: 50px;background: #96b97d;padding-top: 20px;padding-bottom: 20px;height: 60px" class="text-center">
         <p>Copyright © 2019 Smileyan</p>
     </div>
-   
+	
+    <!-- 添加分类 -->
+   <!-- 模态框（Modal） -->
+	<div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title" id="myModalLabel">
+						模态框1
+					</h4>
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+						&times;
+					</button>
+				</div>
+				<div class="modal-body">
+					在这里添加一些文本
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">关闭
+					</button>
+					<button type="button" class="btn btn-primary">
+						提交更改
+					</button>
+				</div>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal -->
+	</div>
+		
+	<!-- 编辑分类 -->
+    <!-- 模态框（Modal） -->
+	<div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title" id="myModalLabel">
+						模态框2
+					</h4>
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+						&times;
+					</button>
+				</div>
+				<div class="modal-body">
+					在这里添加一些文本
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">关闭
+					</button>
+					<button type="button" class="btn btn-primary">
+						提交更改
+					</button>
+				</div>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal -->
+	</div>
+  </div>
 </div>
 
 </body>
