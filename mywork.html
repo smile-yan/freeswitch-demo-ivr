@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Bootstrap 实例</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.1.0/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/popper.js/1.12.5/umd/popper.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/4.1.0/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // $.get("http://withyan.cn:8080/", function (data, status) {
+            //     // alert("数据: " + data + "\n状态: " + status);
+            //     $("body").append("<p class=\"container text-center\">积分："+data.score+"</p>");
+            //     $("body").append("<p class=\"container text-center\">排名："+data.place+"</p>");
+            //     $("body").append("<p class=\"container text-center\">访客："+data.visitor+"</p>");
+            //     $("body").append("<p class=\"container text-center\">等级："+data.grade+"</p>");
+            // });
+        })
+    </script>
+</head>
+<body>
+<div class="container text-center">
+    <div class="jumbotron" style="background: #96b97d">
+        <h2>Smileyan 语音合成</h2>
+		<button type="button" class="btn btn-outline-info">添加分类</button>
+    </div>
+</div>
+<div class="container">
+
+    <div class="row" style="margin-top: 10px">
+        <div class="col-sm-2"></div>
+        <div class="col-sm-8">
+            <h2>分类名称
+				<div  style="float: right">
+					<button type="button" class="btn btn-outline-info">编辑分类</button>
+			        <button type="button" class="btn btn-outline-info">添加语音</button>
+				</div>
+            </h2>
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <span style="float:left" >
+                        内容简介
+                    </span>
+                    <span style="float:right">
+                        <button type="button" class="btn btn-success">详情</button>
+                        <button type="button" class="btn btn-success">编辑</button>
+                        <button type="button" class="btn btn-success">生成</button>
+                    </span>
+                </li>
+                <li class="list-group-item">
+                    <span style="float:left" >
+                        内容简介
+                    </span>
+                    <span style="float:right">
+                        <button type="button" class="btn btn-success">详情</button>
+                        <button type="button" class="btn btn-success">编辑</button>
+                        <button type="button" class="btn btn-success">生成</button>
+                    </span>
+                </li>
+            </ul>
+        </div>
+        <div class="col-sm-2"></div>
+
+    </div>
+    <div style="margin-top: 50px;background: #96b97d;padding-top: 20px;padding-bottom: 20px;height: 60px" class="text-center">
+        <p>Copyright © 2019 Smileyan</p>
+    </div>
+   
+</div>
+
+</body>
+</html>
